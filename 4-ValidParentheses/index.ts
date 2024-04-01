@@ -1,31 +1,23 @@
 function isValid(s: string): boolean {
-  const open = ['(', '{', '['];
-
-  const openParantheses: Record<string, number> = {
-    '(': 0,
-    '{': 0,
-    '[': 0,
-  };
-
-  const closedParantheses: Record<string, number> = {
-    ')': 0,
-    '}': 0,
-    ']': 0,
-  };
-
+  const stack: string[] = [];
+  
   for (let i = 0; i < s.length; i++) {
-    if (open.includes(s[i])) {
-      openParantheses[s[i]] += 1;
-    } else {
-      closedParantheses[s[i]] += 1;
-    }
+      if (s[i] === '(' || s[i] === '{' || s[i] === '[') {
+          stack.push(s[i]);
+      }
+      else if (s[i] === ')' && stack.length !== 0 && stack[stack.length - 1] === '(') {
+          stack.pop();
+      } else if (s[i] === '}' && stack.length !== 0 && stack[stack.length - 1] === '{') {
+          stack.pop();
+      } else if (s[i] === ']' && stack.length !== 0 && stack[stack.length - 1] === '[') {
+          stack.pop();
+      }
+      else {
+          return false;
+      }
   }
   
-  return (
-    openParantheses['('] === closedParantheses[')'] &&
-    openParantheses['{'] === closedParantheses['}'] &&
-    openParantheses['['] === closedParantheses[']']
-  );
+  return stack.length === 0;
 }
 
 console.log('test 1: ()');
