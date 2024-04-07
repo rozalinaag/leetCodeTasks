@@ -1,13 +1,31 @@
 function merge(nums1: number[], m: number, nums2: number[], n: number): void {
-  for (let i = m; i < n + m; i++) {
-    if (nums1[i] === 0) {
-      nums1[i] = nums2[i - m];
+  let indexOfAddedNums2 = 0;
+  let lengthReadyArray = m;
+
+  for (let i = 0; i < n + m; i++) {
+    if (nums1[i] >= nums2[indexOfAddedNums2]) {
+      let valueMiddleItem = nums1[i];
+      nums1[i] = nums2[indexOfAddedNums2];
+
+      let saveValue = valueMiddleItem;
+
+      for (let index = i + 1; index < n + m; index++) {
+        valueMiddleItem = nums1[index];
+        nums1[index] = saveValue;
+        saveValue = valueMiddleItem;
+      }
+
+      indexOfAddedNums2 += 1;
+      lengthReadyArray += 1;
+    } else if (i >= lengthReadyArray && indexOfAddedNums2 < n) {
+      nums1[i] = nums2[indexOfAddedNums2];
+      
+      indexOfAddedNums2 += 1;
+      lengthReadyArray += 1;
     }
   }
 
-  nums1.sort((a, b) => a - b);
-
-  console.log(nums1)
+  console.log(nums1);
 }
 
 console.log('test 1: nums1 = [1,2,3,0,0,0], m = 3, nums2 = [2,5,6], n = 3');
