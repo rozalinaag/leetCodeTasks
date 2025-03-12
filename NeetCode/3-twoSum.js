@@ -2,27 +2,12 @@ function twoSum(nums, target) {
   let hashMap = {};
 
   for (let i = 0; i < nums.length; i++) {
-    let currentValue = nums[i];
-
-    if (currentValue > target) {
-      continue;
+    let diff = target - nums[i];
+    if (diff in hashMap) {
+      return [hashMap[diff], i];
     }
-
-    if (!hashMap[currentValue]) {
-      hashMap[currentValue] = [i];
-    } else {
-      hashMap[currentValue].add(i);
-    }
-
-    let needToFind = target - currentValue;
-
-    if (
-      hashMap[needToFind] &&
-      hashMap[needToFind][0] !== hashMap[currentValue][0]
-    ) {
-      return [hashMap[needToFind][0], hashMap[currentValue][0]];
-    }
+    hashMap[nums[i]] = i;
   }
 }
 
-twoSum((nums = [3, 4, 5, 6]), (target = 7));
+console.log(twoSum((nums = [5, 5]), (target = 10)));
