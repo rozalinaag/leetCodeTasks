@@ -1,39 +1,30 @@
 function groupAnagrams(strs) {
   let result = new Map();
 
-  function createMapCharacterFrequency(line) {
-    let charsObj = new Object();
+  function createArrayCharacterFrequency(line) {
+    let array = new Array(26);
     for (const char of line) {
-      charsObj[char] = (charsObj[char] || 0) + 1;
-    }
-    return charsObj;
-  }
+      let = codeSymbol = char.charCodeAt() - 'a'.charCodeAt();
 
-  function areObjectsEqual(objA, objB) {
-    const keysA = Object.keys(objA).sort();
-    const keysB = Object.keys(objB).sort();
-    if (keysA.length !== keysB.length) return false;
-    return keysA.every((key) => objA[key] === objB[key]);
-  }
-
-  function hasEqualKey(map, compareObj) {
-    for (let key of map.keys()) {
-      if (areObjectsEqual(key, compareObj)) {
-        return key;
+      if (array[codeSymbol]) {
+        array[codeSymbol] += 1;
+      } else {
+        array[codeSymbol] = 1;
       }
     }
-    return false;
+
+    return array;
   }
 
   for (let i = 0; i < strs.length; i++) {
-    const keyObj = createMapCharacterFrequency(strs[i]);
-    const keyResultObj = hasEqualKey(result, keyObj);
-    if (keyResultObj) {
-      result.set(keyResultObj, [...result.get(keyResultObj), strs[i]]);
+    const arrayKey = createArrayCharacterFrequency(strs[i]).toString();
+    if (result.has(arrayKey)) {
+      result.set(arrayKey, [...result.get(arrayKey), strs[i]]);
     } else {
-      result.set(keyObj, [strs[i]]);
+      result.set(arrayKey, [strs[i]]);
     }
   }
+  console.log(result);
   return [...result.values()];
 }
 
