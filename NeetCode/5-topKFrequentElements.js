@@ -1,33 +1,28 @@
 function topKFrequent(nums, k) {
-  let resultFrequents = {};
+  const frequencyMap = new Map();
 
-  for (const element of nums) {
-    if (element in resultFrequents) {
-      resultFrequents[element] += 1;
-    } else {
-      resultFrequents[element] = 1;
-    }
+  for (const num of nums) {
+    frequencyMap.set(num, (frequencyMap.get(num) || 0) + 1);
   }
 
-  let indexFrequency = [];
-  for (let key in resultFrequents) {
-    frequency = resultFrequents[key];
-    if (indexFrequency[frequency]) {
-      indexFrequency[frequency].push(key);
-    } else {
-      indexFrequency[frequency] = [key];
-    }
+  let bucket = Array(nums.length + 1)
+    .fill(null)
+    .map(() => []);
+
+  for (const [num, freq] of frequencyMap.entries()) {
+    bucket[freq].push(num);
   }
 
   let result = [];
-  for (let i = indexFrequency.length - 1; i > 0; i--) {
-    result.push(...indexFrequency[i].slice(0, k));
+  for (let i = bucket.length - 1; i > 0; i--) {
+    if (bucket[i].length > 0) {
+      result.push(...bucket[i]);
+    }
+
     if (result.length >= k) {
-      break;
+      return result.slice(0, k);
     }
   }
-
-  return result;
 }
 
-console.log(topKFrequent((nums = [1, 2, 2, 3, 3, 3]), (k = 2)));
+console.log(topKFrequent((nums = [5, 3, 1, 1, 1, 3, 73, 1]), (k = 2)));
