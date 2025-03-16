@@ -1,6 +1,12 @@
 function encode(strs) {
-  let concat = strs.join(' ');
-  return concat;
+  let result = '';
+  for (let i = 0; i < strs.length; i++) {
+    let lenWord = strs[i].length;
+    result += `(${lenWord})` + strs[i];
+  }
+
+  console.log(result);
+  return result;
 }
 
 function decode(str) {
