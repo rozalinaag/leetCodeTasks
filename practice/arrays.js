@@ -1,9 +1,5 @@
 function is_array(arr){
-    if (Array.isArray(arr)){
-        return true;
-    } else{
-        return false;
-    }
+    return Array.isArray(arr)
 }
 
 console.log(is_array(["3", "4", "5"]))
@@ -39,3 +35,33 @@ function joinElementsOfArray(arr, arr2){
 }
 
 console.log(joinElementsOfArray([2,4,5], [5, 3]))
+
+//--------------------------------------------------------------
+
+console.log([3,4,1,2].sort((a, b) => b-a))
+
+//--------------------------------------------------------------
+
+function mostFrequencyItem(arr){
+    let objItems = {}
+
+    for (let i=0; i<arr.length; i++){
+        if (objItems[arr[i]]){
+            objItems[arr[i]] = objItems[arr[i]] + 1
+        } else{
+            objItems[arr[i]] = 1
+        }
+    }
+
+    let bigValue = [1, arr[0]]
+
+    for (let item of Object.keys(objItems)) {
+       if (objItems[item] > bigValue[0]){
+           bigValue = [objItems[item], item]
+       }
+    }
+
+    return bigValue[1]
+}
+
+console.log(mostFrequencyItem(['aa', 'ff', 'ff', '54']))
